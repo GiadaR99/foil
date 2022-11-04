@@ -1,13 +1,13 @@
 import datetime
 
-from foil.learning import foil
-from foil.learning import get_closure
-from foil.learning import get_constants
-from foil.learning import get_masks
-from foil.models import Clause
-from foil.models import Example
-from foil.models import Literal
-from foil.models import Program
+from src.main.python.foil.learning import foil
+from src.main.python.foil.learning import get_closure
+from src.main.python.foil.learning import get_constants
+from src.main.python.foil.learning import get_masks
+from src.main.python.foil.models import Clause
+from src.main.python.foil.models import Example
+from src.main.python.foil.models import Literal
+from src.main.python.foil.models import Program
 
 
 class Measure:

@@ -1,32 +1,69 @@
-from foil.models import Program
+from src.main.python.foil.learning import get_constants, get_closure, get_masks, foil
+from src.main.python.foil.models import Program
+from src.main.python.foil.models import Clause
+from src.main.python.foil.models import Example
+from src.main.python.foil.models import Literal
+from src.main.python.foil.models import Label
 
 source = """
-father(frank,alan).
-father(alan,sean).
-father(sean,jane).
-father(george,bob).
-father(george,tim).
-father(bob,jan).
-father(tim,tom).
-father(tom,thomas).
-father(ian,ann).
-father(thomas,billy).
-mother(rebecca,alan).
-mother(rebecca,abe).
-mother(joan,sean).
-mother(jane,ann).
-mother(jannet,tim).
-mother(jannet,bob).
-mother(tammy,tom).
-mother(tipsy,thomas).
-mother(debrah,billy).
-mother(jill,jan).
-mother(jan,jane).
+parent(a,b).
+parent(a,c).
+parent(d,b).
+mother(d,b).
+male(a).
+female(c).
+female(d).
 """
 
 if __name__ == '__main__':
     program = Program.parse(source)
-    print(program)
+    background = [
+        Clause.parse('parent(a,b).'), Clause.parse('parent(a,c).'), Clause.parse('parent(d,b).'),
+        Clause.parse('mother(d,b).'), Clause.parse('male(a).'), Clause.parse('female(c).'),
+        Clause.parse('female(d).')
+    ]
+    print('Background:')
+    print()
+    print(background)
+    print()
+
+    target_name = 'father'
+
+    target = Literal.parse(target_name + '(X,Y)')
+    examples = [
+        Example({'X': 'a', 'Y': 'b'}, Label.POSITIVE),
+        Example({'X': 'a', 'Y': 'c'}, Label.POSITIVE),
+        Example({'X': 'a', 'Y': 'd'}, Label.NEGATIVE),
+        Example({'X': 'b', 'Y': 'a'}, Label.NEGATIVE),
+        Example({'X': 'b', 'Y': 'c'}, Label.NEGATIVE),
+        Example({'X': 'b', 'Y': 'd'}, Label.NEGATIVE),
+        Example({'X': 'c', 'Y': 'a'}, Label.NEGATIVE),
+        Example({'X': 'c', 'Y': 'b'}, Label.NEGATIVE),
+        Example({'X': 'c', 'Y': 'd'}, Label.NEGATIVE),
+        Example({'X': 'd', 'Y': 'a'}, Label.NEGATIVE),
+        Example({'X': 'd', 'Y': 'b'}, Label.NEGATIVE),
+        Example({'X': 'd', 'Y': 'c'}, Label.NEGATIVE)
+    ]
+
+    print('Esempi:')
+    print()
+
+    for example in examples:
+        if example.label is Label.POSITIVE:
+            print('+ : '+target_name+'('+example.assignment.get('X')+','+example.assignment.get('Y')+')')
+        else:
+            print('- : '+target_name+'('+example.assignment.get('X')+','+example.assignment.get('Y')+')')
+
+    constants = get_constants([target, *{l for c in background for l in c.literals}])
+    world = Program(background).ground()
+    positives, negatives = get_closure(target, constants, world, examples)
+    masks = get_masks([target, *{l for c in background for l in c.literals}])
+    for clause in foil(target, background, masks, constants, positives, negatives):
+        print()
+        print('Risultato:')
+        print()
+        print(clause)
+
     print()
 
     print('Done.')

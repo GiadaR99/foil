@@ -1,8 +1,8 @@
-from foil.models import Example
-from foil.models import Label
-from foil.models import Literal
-from foil.models import Problem
-from foil.models import Program
+from src.main.python.foil.models import Example
+from src.main.python.foil.models import Label
+from src.main.python.foil.models import Literal
+from src.main.python.foil.models import Problem
+from src.main.python.foil.models import Program
 
 if __name__ == '__main__':
     problem = Problem(

@@ -4,10 +4,10 @@ from typing import Optional
 from typing import Tuple
 from typing import Union
 
-from foil.models import Clause
-from foil.models import Literal
-from foil.models import Program
-from foil.unification import Substitution
+from src.main.python.foil.models import Clause
+from src.main.python.foil.models import Literal
+from src.main.python.foil.models import Program
+from src.main.python.foil.unification import Substitution
 
 Payload = Tuple[List[Literal], Substitution]
 

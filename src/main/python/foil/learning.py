@@ -17,8 +17,8 @@ def get_closure(
         world: List['Literal'],
         examples: List['Example'],
 ) -> Tuple[List['Assignment'], List['Assignment']]:
-    from foil.models import Label
-    from foil.unification import is_variable
+    from src.main.python.foil.models import Label
+    from src.main.python.foil.unification import is_variable
 
     positives, negatives = [], []
     for example in examples:
@@ -55,7 +55,7 @@ def get_masks(literals: List['Literal']) -> List['Mask']:
 
 
 def get_constants(literals: List['Literal']) -> List['Value']:
-    from foil.unification import is_ground
+    from src.main.python.foil.unification import is_ground
 
     constants = []
     for literal in literals:
@@ -107,7 +107,7 @@ def find_clause(
         positives: List['Assignment'],
         negatives: List['Assignment'],
 ) -> Optional[Hypothesis]:
-    from foil.models import Clause
+    from src.main.python.foil.models import Clause
 
     body, positives, negatives = [], [*positives], [*negatives]
     while negatives:
@@ -135,10 +135,10 @@ def find_literal(
         positives: List['Assignment'],
         negatives: List['Assignment'],
 ) -> Optional[Candidate]:
-    from foil.models import Atom
-    from foil.models import Clause
-    from foil.models import Literal
-    from foil.models import Program
+    from src.main.python.foil.models import Atom
+    from src.main.python.foil.models import Clause
+    from src.main.python.foil.models import Literal
+    from src.main.python.foil.models import Program
 
     candidate, table, bound = None, get_table([target, *body]), max_gain(positives, negatives)
     for mask in masks:
@@ -167,7 +167,7 @@ def max_gain(pos: List['Assignment'], neg: List['Assignment']) -> float:
 
 
 def get_table(literals: List['Literal']) -> Dict[int, 'Variable']:
-    from foil.unification import is_variable
+    from src.main.python.foil.unification import is_variable
 
     variables = []
     for literal in literals:
@@ -210,7 +210,7 @@ def extend(
         constants: List['Value'],
         world: List['Literal'],
 ) -> List['Assignment']:
-    from foil.unification import is_variable
+    from src.main.python.foil.unification import is_variable
 
     if not examples:
         return []

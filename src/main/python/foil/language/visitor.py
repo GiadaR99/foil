@@ -16,7 +16,7 @@ class FoilVisitor(PTNodeVisitor):
         return node.value
 
     def visit_program(self, node: Node, children: List) -> 'Program':
-        from foil.models import Program
+        from src.main.python.foil.models import Program
 
         return Program(children)
 
@@ -24,7 +24,7 @@ class FoilVisitor(PTNodeVisitor):
         return children[0]
 
     def visit_example(self, node: Node, children: List) -> 'Example':
-        from foil.models import Example
+        from src.main.python.foil.models import Example
 
         return Example(children[0], children[1])
 
@@ -32,7 +32,7 @@ class FoilVisitor(PTNodeVisitor):
         return node.value == '+'
 
     def visit_ground_literal(self, node: Node, children: List) -> 'Literal':
-        from foil.models import Literal
+        from src.main.python.foil.models import Literal
 
         try:
             return Literal(children[1], children[0])
@@ -40,7 +40,7 @@ class FoilVisitor(PTNodeVisitor):
             return Literal(children[0], False)
 
     def visit_ground_atom(self, node: Node, children: List) -> 'Atom':
-        from foil.models import Atom
+        from src.main.python.foil.models import Atom
 
         try:
             return Atom(children[0], children[1])
@@ -54,7 +54,7 @@ class FoilVisitor(PTNodeVisitor):
         return children[0]
 
     def visit_clause(self, node: Node, children: List) -> 'Clause':
-        from foil.models import Clause
+        from src.main.python.foil.models import Clause
 
         try:
             return Clause(children[0], children[1])
@@ -65,7 +65,7 @@ class FoilVisitor(PTNodeVisitor):
         return [child for child in children]
 
     def visit_literal(self, node: Node, children: List) -> 'Literal':
-        from foil.models import Literal
+        from src.main.python.foil.models import Literal
 
         try:
             return Literal(children[1], children[0])
@@ -76,7 +76,7 @@ class FoilVisitor(PTNodeVisitor):
         return True if len(children) % 2 == 1 else False
 
     def visit_atom(self, node: Node, children: List) -> 'Atom':
-        from foil.models import Atom
+        from src.main.python.foil.models import Atom
 
         try:
             return Atom(children[0], children[1])

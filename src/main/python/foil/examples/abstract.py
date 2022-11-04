@@ -1,5 +1,5 @@
-from foil.models import Literal
-from foil.models import Program
+from src.main.python.foil.models import Literal
+from src.main.python.foil.models import Program
 
 source = """
 q(X,Y) :- p(Y,X).

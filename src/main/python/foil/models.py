@@ -7,17 +7,17 @@ from typing import Optional
 from arpeggio import ParserPython
 from arpeggio import visit_parse_tree
 
-from foil.language.visitor import FoilVisitor
-from foil.unification import Derivation
-from foil.unification import is_ground
-from foil.unification import is_variable
-from foil.unification import normalize
-from foil.unification import simplify
-from foil.unification import Substitution
-from foil.unification import Term
-from foil.unification import unify
-from foil.unification import Value
-from foil.unification import Variable
+from src.main.python.foil.language.visitor import FoilVisitor
+from src.main.python.foil.unification import Derivation
+from src.main.python.foil.unification import is_ground
+from src.main.python.foil.unification import is_variable
+from src.main.python.foil.unification import normalize
+from src.main.python.foil.unification import simplify
+from src.main.python.foil.unification import Substitution
+from src.main.python.foil.unification import Term
+from src.main.python.foil.unification import unify
+from src.main.python.foil.unification import Value
+from src.main.python.foil.unification import Variable
 
 
 class Mask:
@@ -65,8 +65,8 @@ class Atom:
 
     @staticmethod
     def parse(content: str) -> 'Atom':
-        from foil.language.grammar import atom
-        from foil.language.grammar import comment
+        from src.main.python.foil.language.grammar import atom
+        from src.main.python.foil.language.grammar import comment
 
         parser = ParserPython(atom, comment_def=comment)
         parse_tree = parser.parse(content)
@@ -143,8 +143,8 @@ class Literal:
 
     @staticmethod
     def parse(content: str) -> 'Literal':
-        from foil.language.grammar import literal
-        from foil.language.grammar import comment
+        from src.main.python.foil.language.grammar import literal
+        from src.main.python.foil.language.grammar import comment
 
         parser = ParserPython(literal, comment_def=comment)
         parse_tree = parser.parse(content)
@@ -213,8 +213,8 @@ class Clause:
 
     @staticmethod
     def parse(content: str) -> 'Clause':
-        from foil.language.grammar import clause
-        from foil.language.grammar import comment
+        from src.main.python.foil.language.grammar import clause
+        from src.main.python.foil.language.grammar import comment
 
         parser = ParserPython(clause, comment_def=comment)
         parse_tree = parser.parse(content)
@@ -278,8 +278,8 @@ class Program:
 
     @staticmethod
     def parse(content: str) -> 'Program':
-        from foil.language.grammar import program
-        from foil.language.grammar import comment
+        from src.main.python.foil.language.grammar import program
+        from src.main.python.foil.language.grammar import comment
 
         parser = ParserPython(program, comment_def=comment)
         parse_tree = parser.parse(content)
@@ -326,12 +326,12 @@ class Program:
         if not query.is_ground():
             raise ValueError("'query' must be ground: %s" % query)
 
-        from foil.unification import resolve
+        from src.main.python.foil.unification import resolve
 
         return resolve(self, query)
 
     def ground(self) -> List[Literal]:
-        from foil.rete import ground
+        from src.main.python.foil.rete import ground
 
         return ground(self)
 
@@ -454,6 +454,6 @@ class Problem:
         return self._program.ground()
 
     def learn(self) -> List[Clause]:
-        from foil.old.learning import learn_hypotheses
+        from src.main.python.foil.learning import learn_hypotheses
 
         return learn_hypotheses(self._target, list(self.program.clauses), list(self._examples))
