@@ -208,7 +208,7 @@ class Literal:
     def substitute(self, substitution: Substitution) -> 'Literal':
         return Literal(self._atom.substitute(substitution), self._negated)
 
-
+ #ok
 class Clause:
 
     @staticmethod
@@ -453,7 +453,7 @@ class Problem:
     def ground(self) -> List[Literal]:
         return self._program.ground()
 
-    def learn(self) -> List[Clause]:
-        from src.main.python.foil.learning import learn_hypotheses
-
-        return learn_hypotheses(self._target, list(self.program.clauses), list(self._examples))
+    # def learn(self) -> List[Clause]:
+    #     from src.main.python.foil.learning import learn_hypotheses
+    #
+    #     return learn_hypotheses(self._target, list(self.program.clauses), list(self._examples))

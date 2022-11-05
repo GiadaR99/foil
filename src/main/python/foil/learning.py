@@ -118,6 +118,8 @@ def find_clause(
         positives = candidate.positives
         negatives = candidate.negatives
         body.append(candidate.literal)
+        print()
+        print(candidate.literal)
 
     if not body:
         return None  # TODO Needed?
@@ -148,6 +150,9 @@ def find_literal(
             positives_i = extend(positives, literal, constants, world)
             negatives_i = extend(negatives, literal, constants, world)
             score = gain(positives, negatives, positives_i, negatives_i)
+            # print()
+            # print(literal)
+            # print(score)
             if candidate and bound < candidate.score:
                 break
             if candidate is None or score > candidate.score:
