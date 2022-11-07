@@ -19,8 +19,7 @@ if __name__ == '__main__':
     #program = Program.parse(source)
     background = [
         Clause.parse('parent(a,b).'), Clause.parse('parent(a,c).'), Clause.parse('parent(d,b).'),
-        Clause.parse('mother(d,b).'), Clause.parse('male(a).'), Clause.parse('female(c).'),
-        Clause.parse('female(d).')
+        Clause.parse('male(a).'), Clause.parse('female(c).'), Clause.parse('female(d).')
     ]
     print('Background:')
     print()
@@ -57,7 +56,8 @@ if __name__ == '__main__':
     constants = get_constants([target, *{l for c in background for l in c.literals}])
     world = Program(background).ground()
     positives, negatives = get_closure(target, constants, world, examples)
-    masks = get_masks([target, *{l for c in background for l in c.literals}])
+    #masks = get_masks([target, *{l for c in background for l in c.literals}])
+    masks = get_masks([*{l for c in background for l in c.literals}])
 
     for clause in foil(target, background, masks, constants, positives, negatives):
         print()

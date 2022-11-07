@@ -75,6 +75,19 @@ def foil(
         negatives: List['Assignment'],
 ) -> List['Clause']:
     hypotheses = []
+
+    print()
+    print('background:')
+    print(len(background))  # 7
+    print(background)
+    print('positives:')
+    print(len(positives))  # 2
+    print(positives)
+    print('negatives:')
+    print(len(negatives))  # 14
+    print(negatives)
+    print()
+
     while positives:
         hypothesis = find_clause(hypotheses, target, background, masks, constants, positives, negatives)
         if hypothesis is None:
@@ -119,6 +132,7 @@ def find_clause(
         negatives = candidate.negatives
         body.append(candidate.literal)
         print()
+        print('---- Aggiunta del letterale: ---')
         print(candidate.literal)
 
     if not body:
@@ -148,11 +162,21 @@ def find_literal(
             literal = Literal(Atom(mask.functor, items), mask.negated)
             world = Program([*hypotheses, Clause(target, [*body, literal]), *background]).ground()
             positives_i = extend(positives, literal, constants, world)
+            print()
+            print('letterale:')
+            print(literal)
+            print('Positivi soddisfatti:')
+            print(len(positives_i))
             negatives_i = extend(negatives, literal, constants, world)
+            print('Negativi soddisfatti:')
+            print(len(negatives_i))
             score = gain(positives, negatives, positives_i, negatives_i)
-            # print()
-            # print(literal)
-            # print(score)
+            print('Gain:')
+            if score > 0:
+                print(score)
+            else:
+                print(0.0)
+            print()
             if candidate and bound < candidate.score:
                 break
             if candidate is None or score > candidate.score:
@@ -238,6 +262,8 @@ def gain(
         return -1
 
     t = len(covers(pos, pos_i))
+    print('Positivi iniziali ancora coperti:')
+    print(t)
     e = entropy(len(pos), len(neg))
     e_i = entropy(len(pos_i), len(neg_i), True)
 
@@ -249,7 +275,8 @@ def covers(examples: List['Assignment'], examples_i: List['Assignment']) -> List
         return []
 
     if not examples_i:
-        return examples
+        #return examples
+        return[]
 
     variables = examples[0].keys()
     coverage = [{k: v for k, v in e.items() if k in variables} for e in examples_i]
