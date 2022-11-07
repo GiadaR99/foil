@@ -176,10 +176,14 @@ def find_literal(
                 print(score)
             else:
                 print(0.0)
-            print()
+                print(score)
+            print('max gain:')
+            print(bound)
             if candidate and bound < candidate.score:
+                print("bound superato")
                 break
-            if candidate is None or score > candidate.score:
+            if candidate is None or score > candidate.score or math.isnan(candidate.score):
+                print("no candidati o maggiore")
                 candidate = Candidate(score, literal, positives_i, negatives_i)
 
     return candidate
