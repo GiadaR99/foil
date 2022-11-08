@@ -5,18 +5,7 @@ from src.main.python.foil.models import Example
 from src.main.python.foil.models import Literal
 from src.main.python.foil.models import Label
 
-source = """
-parent(a,b).
-parent(a,c).
-parent(d,b).
-mother(d,b).
-male(a).
-female(c).
-female(d).
-"""
-
 if __name__ == '__main__':
-    #program = Program.parse(source)
     background = [
         Clause.parse('parent(a,b).'), Clause.parse('parent(a,c).'), Clause.parse('parent(d,b).'),
         Clause.parse('male(a).'), Clause.parse('female(c).'), Clause.parse('female(d).')
@@ -26,12 +15,13 @@ if __name__ == '__main__':
     print(background)
     print()
 
-    target_name = 'father'
+    target_name = 'mother'
 
     target = Literal.parse(target_name + '(X,Y)')
     examples = [
-        Example({'X': 'a', 'Y': 'b'}, Label.POSITIVE),
-        Example({'X': 'a', 'Y': 'c'}, Label.POSITIVE),
+        Example({'X': 'd', 'Y': 'b'}, Label.POSITIVE),
+        Example({'X': 'a', 'Y': 'b'}, Label.NEGATIVE),
+        Example({'X': 'a', 'Y': 'c'}, Label.NEGATIVE),
         Example({'X': 'a', 'Y': 'd'}, Label.NEGATIVE),
         Example({'X': 'b', 'Y': 'a'}, Label.NEGATIVE),
         Example({'X': 'b', 'Y': 'c'}, Label.NEGATIVE),
@@ -40,7 +30,6 @@ if __name__ == '__main__':
         Example({'X': 'c', 'Y': 'b'}, Label.NEGATIVE),
         Example({'X': 'c', 'Y': 'd'}, Label.NEGATIVE),
         Example({'X': 'd', 'Y': 'a'}, Label.NEGATIVE),
-        Example({'X': 'd', 'Y': 'b'}, Label.NEGATIVE),
         Example({'X': 'd', 'Y': 'c'}, Label.NEGATIVE)
     ]
 
@@ -56,7 +45,6 @@ if __name__ == '__main__':
     constants = get_constants([target, *{l for c in background for l in c.literals}])
     world = Program(background).ground()
     positives, negatives = get_closure(target, constants, world, examples)
-    #masks = get_masks([target, *{l for c in background for l in c.literals}])
     masks = get_masks([*{l for c in background for l in c.literals}])
 
     for clause in foil(target, background, masks, constants, positives, negatives):

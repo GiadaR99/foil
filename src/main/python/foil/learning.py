@@ -79,13 +79,10 @@ def foil(
     print()
     print('background:')
     print(len(background))  # 7
-    print(background)
-    print('positives:')
+    print('positivi:')
     print(len(positives))  # 2
-    print(positives)
-    print('negatives:')
+    print('negativi:')
     print(len(negatives))  # 14
-    print(negatives)
     print()
 
     while positives:
@@ -176,14 +173,10 @@ def find_literal(
                 print(score)
             else:
                 print(0.0)
-                print(score)
-            print('max gain:')
-            print(bound)
             if candidate and bound < candidate.score:
-                print("bound superato")
                 break
             if candidate is None or score > candidate.score or math.isnan(candidate.score):
-                print("no candidati o maggiore")
+                print("è ora il candidato con gain maggiore")
                 candidate = Candidate(score, literal, positives_i, negatives_i)
 
     return candidate
