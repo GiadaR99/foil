@@ -38,9 +38,9 @@ if __name__ == '__main__':
 
     for example in examples:
         if example.label is Label.POSITIVE:
-            print('+ : '+target_name+'('+example.assignment.get('X')+','+example.assignment.get('Y')+')')
+            print('+ : ' + target_name + '(' + example.assignment.get('X') + ',' + example.assignment.get('Y') + ')')
         else:
-            print('- : '+target_name+'('+example.assignment.get('X')+','+example.assignment.get('Y')+')')
+            print('- : ' + target_name + '(' + example.assignment.get('X') + ',' + example.assignment.get('Y') + ')')
 
     constants = get_constants([target, *{l for c in background for l in c.literals}])
     world = Program(background).ground()

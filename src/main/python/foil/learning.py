@@ -169,10 +169,8 @@ def find_literal(
             print(len(negatives_i))
             score = gain(positives, negatives, positives_i, negatives_i)
             print('Gain:')
-            if score > 0:
-                print(score)
-            else:
-                print(0.0)
+            print(score)
+
             if candidate and bound < candidate.score:
                 break
             if candidate is None or score > candidate.score or math.isnan(candidate.score):
@@ -283,10 +281,6 @@ def covers(examples: List['Assignment'], examples_i: List['Assignment']) -> List
 
 def entropy(pos: int, neg: int, extra: bool = False) -> float:
     if pos == 0:
-        return math.inf
-
+        return 0.0
     ratio = pos / (pos + neg)
-    if extra:
-        ratio += 1e-12
-
     return -math.log2(ratio)
