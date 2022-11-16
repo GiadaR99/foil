@@ -176,7 +176,9 @@ def find_literal(
             if candidate is None or score > candidate.score or math.isnan(candidate.score):
                 print("è ora il candidato con gain maggiore")
                 candidate = Candidate(score, literal, positives_i, negatives_i)
-
+    #CAMBIATA LA RIGA SOTTO !!!
+    if candidate.score <= 0:
+        return None
     return candidate
 
 
