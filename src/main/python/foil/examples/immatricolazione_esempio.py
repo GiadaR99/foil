@@ -111,8 +111,8 @@ if __name__ == '__main__':
         Example({'X': 'e'}, Label.NEGATIVE),
         Example({'X': 'f'}, Label.NEGATIVE),
         Example({'X': 'h'}, Label.NEGATIVE),
-        Example({'X': 'k'}, Label.POSITIVE),
-        Example({'X': 'l'}, Label.POSITIVE)
+        Example({'X': 'k'}, Label.NEGATIVE),
+        Example({'X': 'l'}, Label.NEGATIVE)
     ]
 
     print('Esempi:')

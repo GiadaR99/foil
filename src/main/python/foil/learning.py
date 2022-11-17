@@ -91,7 +91,12 @@ def foil(
             break
 
         positives = exclude(positives, hypothesis.positives)
+        print('positivi già soddisfatti:')
+        print(hypothesis.positives)
         hypotheses.append(hypothesis.clause)
+        print('positivi per il nuovo letterale:')
+        print(len(positives))
+        print(positives)
 
     return hypotheses
 
@@ -123,18 +128,19 @@ def find_clause(
     while negatives:
         candidate = find_literal(hypotheses, target, body, background, masks, constants, positives, negatives)
         if candidate is None:
-            break
+            print('RISULTATO DA ESCLUDERE: non corretto, soddisfa ancora esempi negativi ma non si può migliorare.')
+            return None
 
         positives = candidate.positives
         negatives = candidate.negatives
         body.append(candidate.literal)
         print()
-        print('---- Aggiunta del letterale: ---')
+        print('---------- Aggiunta del letterale: ----------')
         print(candidate.literal)
 
     if not body:
         return None  # TODO Needed?
-
+    print('ho terminato i negativi!')
     return Hypothesis(Clause(target, body), positives)
 
 
