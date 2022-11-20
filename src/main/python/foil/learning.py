@@ -76,14 +76,29 @@ def foil(
 ) -> List['Clause']:
     hypotheses = []
 
+    print('_____________________________________________')
     print()
     print('background:')
     print(len(background))  # 7
-    print('positivi:')
+    print('positivi totali:')
     print(len(positives))  # 2
-    print('negativi:')
+    print('negativi totali:')
     print(len(negatives))  # 14
     print()
+
+    print('_____________________________________________')
+
+    print()
+    print(str(target) + ' :- ')
+    print()
+    print('positivi soddisfatti: ')
+    print(len(positives))
+    print('negativi soddisfatti: ')
+    print(len(negatives))
+    print()
+    print('_____________________________________________')
+    print()
+    print('INIZIO VALUTAZIONE POSSIBILI LETTERALI DA AGGIUNGERE:')
 
     while positives:
         hypothesis = find_clause(hypotheses, target, background, masks, constants, positives, negatives)
@@ -91,12 +106,23 @@ def foil(
             break
 
         positives = exclude(positives, hypothesis.positives)
-        print('positivi già soddisfatti:')
-        print(hypothesis.positives)
+
         hypotheses.append(hypothesis.clause)
-        print('positivi per il nuovo letterale:')
-        print(len(positives))
-        print(positives)
+
+        if positives:
+            print()
+            print('positivi già soddisfatti:')
+            print(hypothesis.positives)
+            print('positivi non ancora soddisfatti:')
+            print(positives)
+            print('la soluzione è incompleta (non soddisfa tutti gli esempi positivi):')
+            print('cerco letterali che soddisfino i positivi rimanenti')
+            print()
+        else:
+            print()
+            print('Tutti i positivi sono soddisfatti.')
+            print('_____________________________________________')
+            print()
 
     return hypotheses
 
@@ -128,19 +154,32 @@ def find_clause(
     while negatives:
         candidate = find_literal(hypotheses, target, body, background, masks, constants, positives, negatives)
         if candidate is None:
-            print('RISULTATO DA ESCLUDERE: non corretto, soddisfa ancora esempi negativi ma non si può migliorare.')
+            print('RISULTATO DA ESCLUDERE. ')
+            print('La soluzione sarà consistente ma incompleta ')
+            print('(non soddisfa tutti gli esempi positivi)')
+            print()
+            print('_____________________________________________')
+            print()
             return None
 
         positives = candidate.positives
         negatives = candidate.negatives
         body.append(candidate.literal)
         print()
+        print()
         print('---------- Aggiunta del letterale: ----------')
         print(candidate.literal)
+        print('______________________________________________')
+        print()
+        if negatives:
+            print('la soluzione è inconsistente (soddisfa anche esempi negativi):')
+            print('cerco letterali che escludano tali esempi negativi')
+            print('_____________________________________________')
 
     if not body:
         return None  # TODO Needed?
-    print('ho terminato i negativi!')
+    print('Tutti i negativi sono stati esclusi.')
+    print()
     return Hypothesis(Clause(target, body), positives)
 
 
@@ -182,7 +221,7 @@ def find_literal(
             if candidate is None or score > candidate.score or math.isnan(candidate.score):
                 print("è ora il candidato con gain maggiore")
                 candidate = Candidate(score, literal, positives_i, negatives_i)
-    #CAMBIATA LA RIGA SOTTO !!!
+    # CAMBIATA LA RIGA SOTTO !!!
     if candidate.score <= 0:
         return None
     return candidate
@@ -278,8 +317,8 @@ def covers(examples: List['Assignment'], examples_i: List['Assignment']) -> List
         return []
 
     if not examples_i:
-        #return examples
-        return[]
+        # return examples
+        return []
 
     variables = examples[0].keys()
     coverage = [{k: v for k, v in e.items() if k in variables} for e in examples_i]
