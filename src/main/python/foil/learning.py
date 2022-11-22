@@ -101,7 +101,8 @@ def foil(
     print('INIZIO VALUTAZIONE POSSIBILI LETTERALI DA AGGIUNGERE:')
 
     while positives:
-        hypothesis = find_clause(hypotheses, target, background, masks, constants, positives, negatives)
+        hypothesis = find_clause(hypotheses, target, background,
+                                 masks, constants, positives, negatives)
         if hypothesis is None:
             break
 
@@ -221,7 +222,6 @@ def find_literal(
             if candidate is None or score > candidate.score or math.isnan(candidate.score):
                 print("è ora il candidato con gain maggiore")
                 candidate = Candidate(score, literal, positives_i, negatives_i)
-    # CAMBIATA LA RIGA SOTTO !!!
     if candidate.score <= 0:
         return None
     return candidate
@@ -297,8 +297,10 @@ def extend(
 
 
 def gain(
-        pos: List['Assignment'], neg: List['Assignment'],
-        pos_i: List['Assignment'], neg_i: List['Assignment'],
+        pos: List['Assignment'],
+        neg: List['Assignment'],
+        pos_i: List['Assignment'],
+        neg_i: List['Assignment'],
 ) -> float:
     if not pos and not neg or not pos_i and not neg_i:
         return -1

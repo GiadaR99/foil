@@ -30,7 +30,11 @@ if __name__ == '__main__':
         Example({'X': 'c', 'Y': 'b'}, Label.NEGATIVE),
         Example({'X': 'c', 'Y': 'd'}, Label.NEGATIVE),
         Example({'X': 'd', 'Y': 'a'}, Label.NEGATIVE),
-        Example({'X': 'd', 'Y': 'c'}, Label.NEGATIVE)
+        Example({'X': 'd', 'Y': 'c'}, Label.NEGATIVE),
+        Example({'X': 'a', 'Y': 'a'}, Label.NEGATIVE),
+        Example({'X': 'b', 'Y': 'b'}, Label.NEGATIVE),
+        Example({'X': 'c', 'Y': 'c'}, Label.NEGATIVE),
+        Example({'X': 'd', 'Y': 'd'}, Label.NEGATIVE)
     ]
 
     print('Esempi:')

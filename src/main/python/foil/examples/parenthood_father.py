@@ -7,8 +7,12 @@ from src.main.python.foil.models import Label
 
 if __name__ == '__main__':
     background = [
-        Clause.parse('parent(a,b).'), Clause.parse('parent(a,c).'), Clause.parse('parent(d,b).'),
-        Clause.parse('male(a).'), Clause.parse('female(c).'), Clause.parse('female(d).')
+        Clause.parse('parent(a,b).'),
+        Clause.parse('parent(a,c).'),
+        Clause.parse('parent(d,b).'),
+        Clause.parse('male(a).'),
+        Clause.parse('female(c).'),
+        Clause.parse('female(d).')
     ]
     print('Background:')
     print()
@@ -16,7 +20,6 @@ if __name__ == '__main__':
     print()
 
     target_name = 'father'
-
     target = Literal.parse(target_name + '(X,Y)')
     examples = [
         Example({'X': 'a', 'Y': 'b'}, Label.POSITIVE),
@@ -30,7 +33,11 @@ if __name__ == '__main__':
         Example({'X': 'c', 'Y': 'd'}, Label.NEGATIVE),
         Example({'X': 'd', 'Y': 'a'}, Label.NEGATIVE),
         Example({'X': 'd', 'Y': 'b'}, Label.NEGATIVE),
-        Example({'X': 'd', 'Y': 'c'}, Label.NEGATIVE)
+        Example({'X': 'd', 'Y': 'c'}, Label.NEGATIVE),
+        Example({'X': 'a', 'Y': 'a'}, Label.NEGATIVE),
+        Example({'X': 'b', 'Y': 'b'}, Label.NEGATIVE),
+        Example({'X': 'c', 'Y': 'c'}, Label.NEGATIVE),
+        Example({'X': 'd', 'Y': 'd'}, Label.NEGATIVE)
     ]
 
     print('Esempi:')
